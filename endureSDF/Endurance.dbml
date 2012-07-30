@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Database Name="Endurance" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Table Name="Routes">
+    <Type Name="Route">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Image" Type="System.Data.Linq.Binary" DbType="Image" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="Length" Type="System.Single" DbType="Real NOT NULL" CanBeNull="false" />
+      <Association Name="FK_RUNS" Member="Runs" OtherKey="RouteID" Type="Run" DeleteRule="CASCADE" />
+    </Type>
+  </Table>
+  <Table Name="Runs">
+    <Type Name="Run">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="RouteID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Date" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Time" Type="System.Single" DbType="Real NOT NULL" CanBeNull="false" />
+      <Column Name="Description" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="UID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="FK_RUNS" Member="Route" ThisKey="RouteID" Type="Route" IsForeignKey="true" DeleteOnNull="true" />
+      <Association Name="FK_USERS" Member="User" ThisKey="UID" Type="User" IsForeignKey="true" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="Users">
+    <Type Name="User">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Password" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="FK_USERS" Member="Runs" OtherKey="UID" Type="Run" DeleteRule="CASCADE" />
+    </Type>
+  </Table>
+</Database>
